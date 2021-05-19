@@ -11,7 +11,7 @@ public class Store<State> {
     
     var subscriptions: Set<SubscriptionWrapper<State>> = []
     
-    var currentState: State {
+    public var currentState: State {
         didSet {
             subscriptions.forEach {
                 if $0.subscriber == nil {
