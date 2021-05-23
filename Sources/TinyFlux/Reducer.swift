@@ -7,11 +7,11 @@
 
 import Foundation
 
-public struct Reducer<S,A> {
-    public init(reduce: @escaping (inout S, A) -> Void
+public struct Reducer<S, A, E> {
+    public init(reduce: @escaping (inout S, A, E) -> Void
     ) {
         self.reduce = reduce
     }
     
-    var reduce: (inout S, A) -> Void
+    var reduce: (inout S, A, E) -> Void
 }

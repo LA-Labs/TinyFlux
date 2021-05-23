@@ -15,13 +15,14 @@ public protocol AnyStoreSubscriber: AnyObject {
 public protocol StoreSubscriber: AnyStoreSubscriber {
     associatedtype StoreSubscriberStateType
     associatedtype Action
+    associatedtype Environment
     associatedtype State: Equatable
     
     
     var store: Store<State> { get set }
-    var reducer: Reducer<State, Action> { get set }
+    var reducer: Reducer<State, Action, Environment> { get set }
     
-    func dispatch(action: Action)
+    func dispatch(action: Action, environment: Environment)
     
     func newState(newValue: StoreSubscriberStateType, oldValue: StoreSubscriberStateType)
     func changeState(change: StateChange<StoreSubscriberStateType>)
@@ -38,7 +39,8 @@ extension StoreSubscriber {
         }
     }
     
-    public func dispatch(action: Action) {
-        reducer.reduce(&store.currentState, action)
+    public func dispatch(action: Action,
+                         environment: Environment) {
+        reducer.reduce(&store.currentState, action, environment)
     }
 }
